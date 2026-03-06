@@ -37,7 +37,7 @@ export default function MetricsPage() {
     apr_current: 6.78,
     apr_7d: 6.45,
     apr_30d: 6.12,
-    total_deposits_eth: 169.00,
+    total_deposits_eth: 169.323,
     total_funds_eth: 66744.72,
     rewards_distributed_eth: 3458.64,
     active_validators: 2056,

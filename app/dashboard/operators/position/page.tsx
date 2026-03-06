@@ -143,10 +143,10 @@ export default function PositionPage() {
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '16px' }}>
               <div>
                 <div style={{ fontSize: '40px', fontWeight: 700, color: '#E8E8EA', fontVariantNumeric: 'tabular-nums', lineHeight: 1.1 }}>
-                  {amountUnit === 'wsteth' ? '169.00' : '$302,550.00'}
+                  {amountUnit === 'wsteth' ? '169.323' : '$302,988.27'}
                 </div>
                 <div style={{ fontSize: '13px', color: '#7A7A82', marginTop: '4px' }}>
-                  {amountUnit === 'wsteth' ? '≈ $302,550.00' : '169.00 wstETH'}
+                  {amountUnit === 'wsteth' ? '≈ $302,988.27' : '169.323 wstETH'}
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
@@ -328,7 +328,7 @@ export default function PositionPage() {
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '16px' }}>
                 <span style={{ fontSize: '12px', color: '#7A7A82' }}>
-                  169.00 wstETH{' '}
+                  169.323 wstETH{' '}
                   <span style={{ color: '#3B82F6', fontWeight: 600, cursor: 'pointer' }}>MAX</span>
                 </span>
               </div>
@@ -354,10 +354,10 @@ export default function PositionPage() {
               <div style={{ background: '#141415', border: '1px solid #2A2A2D', borderRadius: '10px', padding: '16px' }}>
                 {[
                   { label: 'Red',                    value: '◆ Ethereum' },
-                  { label: 'Depósito (wstETH)',       value: '169.00' },
+                  { label: 'Depósito (wstETH)',       value: '169.323' },
                   { label: 'APY',                     value: '6,78%' },
-                  { label: 'Ganancia mensual est.',   value: '$1,618.44' },
-                  { label: 'Ganancia anual est.',     value: '$19,421.24' },
+                  { label: 'Ganancia mensual est.',   value: '$1,711.88' },
+                  { label: 'Ganancia anual est.',     value: '$20,542.61' },
                 ].map((row, i) => (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 0', borderBottom: i < 4 ? '1px solid #1F1F21' : 'none' }}>
                     <span style={{ fontSize: '12px', color: '#7A7A82' }}>{row.label}</span>

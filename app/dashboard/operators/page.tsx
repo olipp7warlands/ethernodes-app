@@ -60,10 +60,10 @@ export default function OperatorsPage() {
             Total Depósitos
           </div>
           <div style={{ fontSize: '36px', fontWeight: 700, color: '#39FF6B', marginBottom: '4px', fontVariantNumeric: 'tabular-nums' }}>
-            $302,550.00
+            $302,988.27
           </div>
           <div style={{ fontSize: '13px', color: '#7A7A82', marginBottom: '16px' }}>
-            169,00 wstETH · Ethereum
+            169,323 wstETH · Ethereum
           </div>
           <MiniChart data={chartData} color="#3B82F6" height={70} />
         </div>
@@ -157,9 +157,9 @@ export default function OperatorsPage() {
           {/* Deposits */}
           <div>
             <div style={{ fontSize: '13px', fontWeight: 600, color: '#E8E8EA', fontVariantNumeric: 'tabular-nums' }}>
-              169,00 wstETH
+              169,323 wstETH
             </div>
-            <div style={{ fontSize: '11px', color: '#7A7A82' }}>$302.550,00</div>
+            <div style={{ fontSize: '11px', color: '#7A7A82' }}>$302.988,27</div>
           </div>
 
           {/* Curator */}
