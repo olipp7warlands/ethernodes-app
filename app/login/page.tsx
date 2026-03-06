@@ -40,24 +40,21 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden" 
-         style={{ background: 'linear-gradient(135deg, #0a1a0f 0%, #0E0E0F 40%, #0f0f1a 100%)' }}>
-      
-      {/* Background blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+
+      {/* Background */}
+      <div style={{ position: 'fixed', inset: 0, zIndex: 0, background: '#0d0d0f' }}>
         <div style={{
-          position: 'absolute', top: '20%', left: '10%',
-          width: '400px', height: '400px',
-          background: 'radial-gradient(circle, rgba(57,255,107,0.06) 0%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(40px)'
+          position: 'absolute', bottom: '-100px', left: '-100px',
+          width: '700px', height: '700px',
+          background: 'radial-gradient(circle, rgba(15,80,35,0.7) 0%, transparent 70%)',
+          filter: 'blur(60px)',
         }} />
         <div style={{
-          position: 'absolute', bottom: '20%', right: '10%',
-          width: '300px', height: '300px',
-          background: 'radial-gradient(circle, rgba(30,80,255,0.06) 0%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(40px)'
+          position: 'absolute', bottom: '-50px', right: '-50px',
+          width: '600px', height: '600px',
+          background: 'radial-gradient(circle, rgba(15,25,90,0.6) 0%, transparent 70%)',
+          filter: 'blur(60px)',
         }} />
       </div>
 
@@ -74,7 +71,7 @@ export default function LoginPage() {
       }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-          <img src="/logo.png" alt="Ethernodes" style={{ height: '40px', width: 'auto' }} />
+          <EthernodesLogo />
         </div>
 
         <form onSubmit={handleLogin}>
@@ -99,6 +96,7 @@ export default function LoginPage() {
                 fontSize: '15px',
                 outline: 'none',
                 transition: 'border-color 0.2s',
+                boxSizing: 'border-box',
               }}
               onFocus={(e) => e.target.style.borderColor = '#39FF6B'}
               onBlur={(e) => e.target.style.borderColor = '#2A2A2D'}
@@ -127,6 +125,7 @@ export default function LoginPage() {
                   fontSize: '15px',
                   outline: 'none',
                   transition: 'border-color 0.2s',
+                  boxSizing: 'border-box',
                 }}
                 onFocus={(e) => e.target.style.borderColor = '#39FF6B'}
                 onBlur={(e) => e.target.style.borderColor = '#2A2A2D'}
@@ -153,11 +152,7 @@ export default function LoginPage() {
               id="remember"
               checked={remember}
               onChange={(e) => setRemember(e.target.checked)}
-              style={{
-                width: '16px', height: '16px',
-                accentColor: '#39FF6B',
-                cursor: 'pointer',
-              }}
+              style={{ width: '16px', height: '16px', accentColor: '#39FF6B', cursor: 'pointer' }}
             />
             <label htmlFor="remember" style={{ fontSize: '14px', color: '#E8E8EA', cursor: 'pointer' }}>
               Recordar contraseña
@@ -215,7 +210,7 @@ export default function LoginPage() {
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           <span style={{ fontSize: '14px', color: '#7A7A82' }}>¿No tiene cuenta? </span>
           <a href="#" style={{ fontSize: '14px', color: '#E8E8EA', fontWeight: 600, textDecoration: 'none' }}>
-            Resgistrarse
+            Registrarse
           </a>
         </div>
       </div>
@@ -223,3 +218,27 @@ export default function LoginPage() {
   )
 }
 
+function EthernodesLogo() {
+  return (
+    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+      {/* Arrow-E icon matching the real Ethernodes logo */}
+      <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="42" height="42" rx="8" fill="rgba(57,255,107,0.08)" />
+        {/* Left arrow → right arrow stacked, forming the E-like mark */}
+        <path d="M10 14H28M10 14L16 9M10 14L16 19" stroke="#39FF6B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M14 21H32M32 21L26 16M32 21L26 26" stroke="#39FF6B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M10 28H28M10 28L16 23M10 28L16 33" stroke="#39FF6B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+      <span style={{
+        fontSize: '42px',
+        fontWeight: 800,
+        color: '#39FF6B',
+        letterSpacing: '-1px',
+        fontFamily: 'Inter, system-ui, sans-serif',
+        lineHeight: 1,
+      }}>
+        Ethernodes
+      </span>
+    </div>
+  )
+}
