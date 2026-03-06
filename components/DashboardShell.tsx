@@ -42,8 +42,8 @@ export default function DashboardShell({ children }: { children: React.ReactNode
         transition: 'transform 0.3s ease',
       }}>
         {/* Logo */}
-        <div style={{ padding: '20px', borderBottom: '1px solid #2A2A2D' }}>
-          <img src="/logo.png" alt="Ethernodes" style={{ height: '32px', width: 'auto' }} />
+        <div style={{ padding: '20px 20px 18px', borderBottom: '1px solid #2A2A2D' }}>
+          <img src="/logo.png" alt="Ethernodes" style={{ height: '44px', width: 'auto' }} />
         </div>
 
         {/* Nav */}
@@ -81,9 +81,10 @@ export default function DashboardShell({ children }: { children: React.ReactNode
               background: 'linear-gradient(135deg, #39FF6B, #00B4D8)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '12px', fontWeight: 700, color: '#0E0E0F',
-            }}>A</div>
+              flexShrink: 0,
+            }}>E</div>
             <div>
-              <div style={{ fontSize: '13px', fontWeight: 500, color: '#E8E8EA' }}>Admin</div>
+              <div style={{ fontSize: '13px', fontWeight: 500, color: '#E8E8EA' }}>Easyfi Wadz</div>
               <div style={{ fontSize: '11px', color: '#7A7A82' }}>Administrador</div>
             </div>
           </div>
