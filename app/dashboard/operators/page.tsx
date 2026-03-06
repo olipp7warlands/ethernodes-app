@@ -79,7 +79,7 @@ export default function OperatorsPage() {
               Net APY
             </div>
             <div style={{ fontSize: '48px', fontWeight: 700, color: '#E8E8EA', lineHeight: 1, marginBottom: '4px' }}>
-              3,49%
+              6,78%
             </div>
             <div style={{ fontSize: '12px', color: '#7A7A82' }}>APR efectivo actual</div>
           </div>
@@ -186,7 +186,7 @@ export default function OperatorsPage() {
 
           {/* APY */}
           <div style={{ fontSize: '14px', fontWeight: 700, color: '#39FF6B' }}>
-            3,49%
+            6,78%
           </div>
 
           {/* Menu */}
