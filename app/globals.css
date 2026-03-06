@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --en-green: #39FF6B;
+  --en-green-dim: rgba(57, 255, 107, 0.15);
+  --en-bg: #0E0E0F;
+  --en-card: #1A1A1C;
+  --en-card2: #242426;
+  --en-border: #2A2A2D;
+  --en-text: #E8E8EA;
+  --en-muted: #7A7A82;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--en-bg);
+  color: var(--en-text);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--en-card);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--en-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--en-muted);
+}
+
+/* Chart green line */
+.recharts-line-curve {
+  filter: drop-shadow(0 0 6px rgba(57, 255, 107, 0.5));
+}
+
+/* Green glow dot */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--en-green);
+  box-shadow: 0 0 0 0 rgba(57, 255, 107, 0.4);
+  animation: pulse-green 2s infinite;
+  display: inline-block;
+}
+
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(57, 255, 107, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(57, 255, 107, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(57, 255, 107, 0); }
+}
+
+/* Tab active state */
+.tab-active {
+  background: rgba(255,255,255,0.1);
+  border-radius: 9999px;
+  padding: 6px 16px;
+}
+
+/* Card hover */
+.metric-card {
+  transition: border-color 0.2s ease;
+}
+.metric-card:hover {
+  border-color: rgba(57, 255, 107, 0.2);
+}
+
+/* Number font */
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
