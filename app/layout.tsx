@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Ethernodes - Ethereum Staking',
   description: 'Professional Ethereum staking platform',
   icons: {
-    icon: '/favicon.ico',
+    icon: '/favicon.svg',
   },
 }
 

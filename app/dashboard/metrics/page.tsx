@@ -34,9 +34,9 @@ type TabType = 'stablecoins' | 'ethereum' | 'bitcoin'
 export default function MetricsPage() {
   const [activeTab, setActiveTab] = useState<TabType>('ethereum')
   const [metrics, setMetrics] = useState({
-    apr_current: 3.49,
-    apr_7d: 3.08,
-    apr_30d: 2.60,
+    apr_current: 6.78,
+    apr_7d: 6.45,
+    apr_30d: 6.12,
     total_deposits_eth: 169.00,
     total_funds_eth: 66744.72,
     rewards_distributed_eth: 3458.64,
