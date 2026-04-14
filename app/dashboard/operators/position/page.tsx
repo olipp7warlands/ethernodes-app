@@ -162,7 +162,12 @@ export default function PositionPage() {
                   {amountUnit === 'wsteth' ? '169.323' : '$302,988.27'}
                 </div>
                 <div style={{ fontSize: '13px', color: '#7A7A82', marginTop: '4px' }}>
-                  {amountUnit === 'wsteth' ? '≈ $302,988.27' : '169.323 wstETH'}
+                  {amountUnit === 'wsteth' ? (
+                    <>
+                      ≈ $302,988.27
+                      <span style={{ fontSize: '11px', color: '#7A7A82', fontStyle: 'italic', marginLeft: '6px' }}>(locked price)</span>
+                    </>
+                  ) : '169.323 wstETH'}
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
