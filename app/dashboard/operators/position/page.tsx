@@ -52,15 +52,14 @@ const TRANSACTIONS: TxRow[] = [
 
 const PAGE_SIZE = 10
 
-function generateDepositGrowth() {
+function generateFlatDeposit(value: number) {
   const data = []
   const start = new Date('2025-10-15')
-  const now = new Date('2026-03-06')
-  const days = Math.floor((now.getTime() - start.getTime()) / 86400000)
-  for (let i = 0; i <= days; i++) {
-    const d = new Date(start.getTime() + i * 86400000)
+  const end = new Date('2026-04-14')
+  const weeks = Math.floor((end.getTime() - start.getTime()) / (7 * 86400000))
+  for (let i = 0; i <= weeks; i++) {
+    const d = new Date(start.getTime() + i * 7 * 86400000)
     const label = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })
-    const value = 302100 + (i / days) * 8000 + Math.sin(i * 0.3) * 400
     data.push({ time: label, value })
   }
   return data
@@ -96,7 +95,10 @@ export default function PositionPage() {
   const withdrawUsd = parseFloat(withdrawAmount) > 0
     ? '$' + (parseFloat(withdrawAmount) * ETH_PRICE).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
     : '$0'
-  const chartData = useMemo(() => generateDepositGrowth(), [])
+  const chartData = useMemo(
+    () => generateFlatDeposit(amountUnit === 'wsteth' ? 169.323 : 302988.27),
+    [amountUnit]
+  )
 
   const sortedTransactions = [...TRANSACTIONS].sort((a, b) =>
     sortOrder === 'desc'
