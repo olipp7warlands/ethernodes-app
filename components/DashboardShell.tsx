@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   BarChart2, Layers, Users, Settings, LogOut,
   ChevronDown, Bell, Menu, X, ExternalLink
 } from 'lucide-react'
+import { useWallet } from '@/context/WalletContext'
 
 const navItems = [
   { icon: BarChart2, label: 'Métricas', href: '/dashboard/metrics' },
@@ -15,10 +16,28 @@ const navItems = [
   { icon: Settings, label: 'Configuración', href: '/dashboard/settings' },
 ]
 
+function shortAddress(addr: string) {
+  return addr.slice(0, 6) + '...' + addr.slice(-4)
+}
+
 export default function DashboardShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const { address, isConnected, connect, disconnect, error: walletError } = useWallet()
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
@@ -117,6 +136,83 @@ export default function DashboardShell({ children }: { children: React.ReactNode
             <span style={{ color: '#7A7A82', fontSize: '13px' }}>app.ethernodes.io</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+
+            {/* Wallet button */}
+            <div ref={dropdownRef} style={{ position: 'relative' }}>
+              {!isConnected ? (
+                <div>
+                  <button
+                    onClick={connect}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '7px',
+                      padding: '6px 14px', borderRadius: '20px',
+                      background: '#1A1A1C', border: '1px solid #2A2A2D',
+                      color: '#E8E8EA', fontSize: '12px', fontWeight: 500,
+                      cursor: 'pointer', transition: 'border-color 0.15s',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#3A3A3E')}
+                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#2A2A2D')}
+                  >
+                    <span style={{ fontSize: '14px', lineHeight: 1 }}>🦊</span>
+                    Conectar Wallet
+                  </button>
+                  {walletError && (
+                    <div style={{
+                      position: 'absolute', top: '38px', right: 0,
+                      background: '#1A1A1C', border: '1px solid rgba(255,107,107,0.3)',
+                      borderRadius: '8px', padding: '8px 12px',
+                      fontSize: '12px', color: '#ff6b6b', whiteSpace: 'nowrap', zIndex: 50,
+                    }}>
+                      {walletError}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  <button
+                    onClick={() => setDropdownOpen(o => !o)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '7px',
+                      padding: '6px 14px', borderRadius: '20px',
+                      background: '#1A1A1C', border: '1px solid rgba(57,255,107,0.3)',
+                      color: '#E8E8EA', fontSize: '12px', fontWeight: 500,
+                      cursor: 'pointer', transition: 'border-color 0.15s',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(57,255,107,0.6)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(57,255,107,0.3)')}
+                  >
+                    <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#39FF6B', flexShrink: 0, display: 'inline-block' }} />
+                    {shortAddress(address!)}
+                  </button>
+
+                  {dropdownOpen && (
+                    <div style={{
+                      position: 'absolute', top: '38px', right: 0,
+                      background: '#1A1A1C', border: '1px solid #2A2A2D',
+                      borderRadius: '10px', padding: '4px',
+                      zIndex: 50, minWidth: '140px',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+                    }}>
+                      <button
+                        onClick={() => { disconnect(); setDropdownOpen(false) }}
+                        style={{
+                          width: '100%', padding: '9px 14px', background: 'none',
+                          border: 'none', borderRadius: '7px', textAlign: 'left',
+                          fontSize: '13px', color: '#ff6b6b', cursor: 'pointer',
+                          transition: 'background 0.12s',
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,107,107,0.08)')}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+                      >
+                        Desconectar
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Status pill */}
             <div style={{
               padding: '6px 14px', borderRadius: '20px',
               background: 'rgba(57,255,107,0.1)',

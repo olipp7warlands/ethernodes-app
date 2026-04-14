@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { ArrowLeft, ExternalLink, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useWallet } from '@/context/WalletContext'
 
 const PositionChart = dynamic(() => import('@/components/AprChart'), { ssr: false })
 
@@ -73,8 +74,13 @@ function fmt(n: number, decimals = 2) {
   return n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
 }
 
+function shortAddr(addr: string) {
+  return addr.slice(0, 6) + '...' + addr.slice(-4)
+}
+
 export default function PositionPage() {
   const router = useRouter()
+  const { address, isConnected, connect } = useWallet()
   const [mainTab, setMainTab] = useState<MainTab>('activity')
   const [sideTab, setSideTab] = useState<SideTab>('withdraw')
   const [amountUnit, setAmountUnit] = useState<'wsteth' | 'usd'>('wsteth')
@@ -313,25 +319,76 @@ export default function PositionPage() {
 
           {sideTab === 'withdraw' ? (
             <>
+              {/* Wallet address label (connected) */}
+              {isConnected && address && (
+                <div style={{ fontSize: '11px', color: '#7A7A82', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#39FF6B', display: 'inline-block', flexShrink: 0 }} />
+                  Wallet: <span style={{ color: '#9A9AA2', fontFamily: 'monospace' }}>{shortAddr(address)}</span>
+                </div>
+              )}
+
               {/* Withdraw input */}
-              <div style={{ background: '#141415', border: '1px solid #2A2A2D', borderRadius: '10px', padding: '14px 16px', marginBottom: '8px' }}>
+              <div style={{
+                background: isConnected ? '#141415' : '#111113',
+                border: `1px solid ${isConnected ? '#2A2A2D' : '#222224'}`,
+                borderRadius: '10px', padding: '14px 16px', marginBottom: '8px',
+                opacity: isConnected ? 1 : 0.5,
+              }}>
                 <div style={{ fontSize: '11px', color: '#7A7A82', marginBottom: '8px' }}>Retirar wstETH</div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <input
                     type="text"
                     defaultValue="0.00"
-                    style={{ background: 'none', border: 'none', outline: 'none', fontSize: '24px', fontWeight: 700, color: '#E8E8EA', width: '100%', fontVariantNumeric: 'tabular-nums' }}
+                    disabled={!isConnected}
+                    readOnly={!isConnected}
+                    style={{
+                      background: 'none', border: 'none', outline: 'none',
+                      fontSize: '24px', fontWeight: 700,
+                      color: isConnected ? '#E8E8EA' : '#4A4A4E',
+                      width: '100%', fontVariantNumeric: 'tabular-nums',
+                      cursor: isConnected ? 'text' : 'not-allowed',
+                    }}
                   />
-                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(135deg, #3B82F6, #1D4ED8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', flexShrink: 0 }}>⬡</div>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(135deg, #3B82F6, #1D4ED8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', flexShrink: 0, opacity: isConnected ? 1 : 0.4 }}>⬡</div>
                 </div>
                 <div style={{ fontSize: '12px', color: '#7A7A82', marginTop: '4px' }}>$0</div>
               </div>
+
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '16px' }}>
                 <span style={{ fontSize: '12px', color: '#7A7A82' }}>
                   169.323 wstETH{' '}
-                  <span style={{ color: '#3B82F6', fontWeight: 600, cursor: 'pointer' }}>MAX</span>
+                  <span style={{ color: isConnected ? '#3B82F6' : '#3A3A3E', fontWeight: 600, cursor: isConnected ? 'pointer' : 'default' }}>MAX</span>
                 </span>
               </div>
+
+              {/* Connect wallet notice (not connected) */}
+              {!isConnected && (
+                <div style={{
+                  background: '#141415', border: '1px solid #2A2A2D',
+                  borderRadius: '10px', padding: '16px', marginBottom: '12px',
+                  display: 'flex', flexDirection: 'column', gap: '12px',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '16px' }}>🔗</span>
+                    <span style={{ fontSize: '13px', fontWeight: 600, color: '#9A9AA2' }}>
+                      Conecta tu wallet para retirar
+                    </span>
+                  </div>
+                  <button
+                    onClick={connect}
+                    style={{
+                      padding: '10px', borderRadius: '8px', border: 'none',
+                      background: '#F6851B', color: '#fff',
+                      fontSize: '13px', fontWeight: 600, cursor: 'pointer',
+                      transition: 'opacity 0.15s',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.85')}
+                    onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+                  >
+                    🦊 Conectar Wallet
+                  </button>
+                </div>
+              )}
 
               {/* Lock notice */}
               <div style={{ background: 'rgba(251,146,60,0.08)', border: '1px solid rgba(251,146,60,0.35)', borderRadius: '10px', padding: '16px', marginBottom: '16px' }}>
@@ -349,6 +406,22 @@ export default function PositionPage() {
                   Los retiros estarán disponibles a partir de esa fecha.
                 </div>
               </div>
+
+              {/* Withdraw button (connected + locked) */}
+              {isConnected && (
+                <button
+                  disabled
+                  style={{
+                    width: '100%', padding: '13px', marginBottom: '16px',
+                    borderRadius: '10px', border: '1px solid #2A2A2D',
+                    background: '#1A1A1C', color: '#4A4A4E',
+                    fontSize: '14px', fontWeight: 600, cursor: 'not-allowed',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                  }}
+                >
+                  🔒 Retirar
+                </button>
+              )}
 
               {/* Summary */}
               <div style={{ background: '#141415', border: '1px solid #2A2A2D', borderRadius: '10px', padding: '16px' }}>
