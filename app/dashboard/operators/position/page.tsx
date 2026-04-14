@@ -84,7 +84,13 @@ export default function PositionPage() {
   const [mainTab, setMainTab] = useState<MainTab>('activity')
   const [sideTab, setSideTab] = useState<SideTab>('withdraw')
   const [amountUnit, setAmountUnit] = useState<'wsteth' | 'usd'>('wsteth')
+  const [withdrawAmount, setWithdrawAmount] = useState('0.00')
   const [page, setPage] = useState(0)
+
+  const MAX_WSTETH = 169.323
+  const withdrawUsd = parseFloat(withdrawAmount) > 0
+    ? '$' + (parseFloat(withdrawAmount) * ETH_PRICE).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '$0'
   const chartData = useMemo(() => generateDepositGrowth(), [])
 
   const totalPages = Math.ceil(TRANSACTIONS.length / PAGE_SIZE)
@@ -338,7 +344,8 @@ export default function PositionPage() {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <input
                     type="text"
-                    defaultValue="0.00"
+                    value={withdrawAmount}
+                    onChange={(e) => setWithdrawAmount(e.target.value)}
                     disabled={!isConnected}
                     readOnly={!isConnected}
                     style={{
@@ -351,13 +358,16 @@ export default function PositionPage() {
                   />
                   <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(135deg, #3B82F6, #1D4ED8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', flexShrink: 0, opacity: isConnected ? 1 : 0.4 }}>⬡</div>
                 </div>
-                <div style={{ fontSize: '12px', color: '#7A7A82', marginTop: '4px' }}>$0</div>
+                <div style={{ fontSize: '12px', color: '#7A7A82', marginTop: '4px' }}>{withdrawUsd}</div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '16px' }}>
                 <span style={{ fontSize: '12px', color: '#7A7A82' }}>
-                  169.323 wstETH{' '}
-                  <span style={{ color: isConnected ? '#3B82F6' : '#3A3A3E', fontWeight: 600, cursor: isConnected ? 'pointer' : 'default' }}>MAX</span>
+                  {MAX_WSTETH} wstETH{' '}
+                  <span
+                    onClick={() => isConnected && setWithdrawAmount(String(MAX_WSTETH))}
+                    style={{ color: isConnected ? '#3B82F6' : '#3A3A3E', fontWeight: 600, cursor: isConnected ? 'pointer' : 'default' }}
+                  >MAX</span>
                 </span>
               </div>
 
@@ -390,8 +400,8 @@ export default function PositionPage() {
                 </div>
               )}
 
-              {/* Lock notice */}
-              <div style={{ background: 'rgba(251,146,60,0.08)', border: '1px solid rgba(251,146,60,0.35)', borderRadius: '10px', padding: '16px', marginBottom: '16px' }}>
+              {/* Lock notice — only when wallet connected */}
+              {isConnected && <div style={{ background: 'rgba(251,146,60,0.08)', border: '1px solid rgba(251,146,60,0.35)', borderRadius: '10px', padding: '16px', marginBottom: '16px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                   <span style={{ fontSize: '16px' }}>🔒</span>
                   <span style={{ fontSize: '14px', fontWeight: 700, color: '#FB923C' }}>Posición bloqueada</span>
@@ -405,7 +415,7 @@ export default function PositionPage() {
                 <div style={{ fontSize: '12px', color: '#9A6A50', marginTop: '6px' }}>
                   Los retiros estarán disponibles a partir de esa fecha.
                 </div>
-              </div>
+              </div>}
 
               {/* Withdraw button (connected + locked) */}
               {isConnected && (
