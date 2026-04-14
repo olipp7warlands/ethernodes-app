@@ -35,13 +35,13 @@ export default function MetricsPage() {
   const [activeTab, setActiveTab] = useState<TabType>('ethereum')
   const [metrics, setMetrics] = useState({
     apr_current: 6.78,
-    apr_7d: 6.45,
-    apr_30d: 6.12,
+    apr_7d: 7.01,
+    apr_30d: 6.43,
     total_deposits_eth: 169.323,
     total_funds_eth: 66744.72,
     rewards_distributed_eth: 3458.64,
     active_validators: 2056,
-    liquidity_withdrawal: 7918.09,
+    liquidity_withdrawal: 1533.14,
     protocol_reserves: 8843.34,
     eth_eur_rate: 1789.50,
   })
@@ -183,14 +183,14 @@ export default function MetricsPage() {
               LIQUIDEZ PARA RETIROS
             </div>
             <div style={{ fontSize: '20px', fontWeight: 700, color: '#E8E8EA', marginBottom: '4px' }}>
-              {fmt(metrics.liquidity_withdrawal)} €
+              {fmt(metrics.liquidity_withdrawal)} $
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ fontSize: '11px', color: '#7A7A82', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                 RESERVAS DEL PROTOCOLO
               </span>
               <span style={{ fontSize: '13px', color: '#E8E8EA', fontWeight: 500 }}>
-                {fmt(metrics.protocol_reserves)} € – 0,00%
+                x – 0,00%
               </span>
             </div>
           </div>
@@ -261,20 +261,20 @@ export default function MetricsPage() {
         <StatCard
           title="TOTAL DEPÓSITOS"
           mainValue={`${fmt(metrics.total_deposits_eth)} ETH`}
-          subValue={`${fmt(totalDepositsEur)} €`}
+          subValue={`${fmt(totalDepositsEur)} $`}
           description="Suma de todo el ETH depositado por los usuarios."
           highlight
         />
         <StatCard
           title="FONDOS TOTALES"
           mainValue={`${fmt(metrics.total_funds_eth)} ETH`}
-          subValue={`${fmt(totalFundsEur)} €`}
+          subValue={`${fmt(totalFundsEur)} $`}
           description="Volumen total gestionado en validación Ethereum."
         />
         <StatCard
           title="RECOMPENSAS REPARTIDAS"
           mainValue={`${fmt(metrics.rewards_distributed_eth)} ETH`}
-          subValue={`${fmt(rewardsEur)} €`}
+          subValue={`${fmt(rewardsEur)} $`}
           description="Recompensas generadas por el Vault desde su lanzamiento."
         />
       </div>
