@@ -4,6 +4,15 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff } from 'lucide-react'
 
+declare global {
+  interface Window {
+    ethereum?: {
+      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
+      isMetaMask?: boolean
+    }
+  }
+}
+
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
@@ -11,7 +20,75 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [remember, setRemember] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [metamaskLoading, setMetamaskLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const handleMetamaskLogin = async () => {
+    setMetamaskLoading(true)
+    setError('')
+
+    try {
+      if (!window.ethereum) {
+        setError('Instala MetaMask para continuar')
+        return
+      }
+
+      // Request wallet connection
+      const { ethers } = await import('ethers')
+      const provider = new ethers.BrowserProvider(window.ethereum)
+      const signer = await provider.getSigner()
+      const address = await signer.getAddress()
+
+      // Get nonce from server
+      const nonceRes = await fetch('/api/auth/nonce')
+      if (!nonceRes.ok) throw new Error('No se pudo obtener el nonce')
+      const { nonce } = await nonceRes.json()
+
+      // Build SIWE message
+      const { SiweMessage } = await import('siwe')
+      const siweMessage = new SiweMessage({
+        domain: window.location.host,
+        address,
+        statement: 'Inicia sesión en Ethernodes',
+        uri: window.location.origin,
+        version: '1',
+        chainId: 1,
+        nonce,
+      })
+      const preparedMessage = siweMessage.prepareMessage()
+
+      // Ask user to sign
+      const signature = await signer.signMessage(preparedMessage)
+
+      // Verify on server
+      const res = await fetch('/api/auth/metamask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address, message: preparedMessage, signature }),
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        router.push('/dashboard/metrics')
+      } else {
+        setError(data.error || 'Error de autenticación')
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        const msg = err.message.toLowerCase()
+        if (msg.includes('user rejected') || msg.includes('action_rejected') || msg.includes('denied')) {
+          setError('Firma cancelada')
+        } else if (msg.includes('network') || msg.includes('chain')) {
+          setError('Red incorrecta — conéctate a Ethereum Mainnet')
+        } else {
+          setError('Error al conectar con MetaMask')
+        }
+      }
+    } finally {
+      setMetamaskLoading(false)
+    }
+  }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -197,6 +274,53 @@ export default function LoginPage() {
             {loading ? 'Accediendo...' : 'Acceder'}
           </button>
         </form>
+
+        {/* Divider */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '20px 0' }}>
+          <div style={{ flex: 1, height: '1px', background: '#2A2A2D' }} />
+          <span style={{ fontSize: '13px', color: '#7A7A82', whiteSpace: 'nowrap' }}>o continúa con</span>
+          <div style={{ flex: 1, height: '1px', background: '#2A2A2D' }} />
+        </div>
+
+        {/* MetaMask button */}
+        <button
+          type="button"
+          onClick={handleMetamaskLogin}
+          disabled={metamaskLoading}
+          style={{
+            width: '100%',
+            background: metamaskLoading ? 'rgba(246,133,27,0.15)' : 'rgba(246,133,27,0.1)',
+            color: metamaskLoading ? '#a0622a' : '#F6851B',
+            border: '1px solid rgba(246,133,27,0.35)',
+            borderRadius: '10px',
+            padding: '13px',
+            fontSize: '15px',
+            fontWeight: '600',
+            cursor: metamaskLoading ? 'not-allowed' : 'pointer',
+            transition: 'all 0.2s',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+          }}
+          onMouseEnter={(e) => {
+            if (!metamaskLoading) {
+              const btn = e.currentTarget
+              btn.style.background = 'rgba(246,133,27,0.18)'
+              btn.style.borderColor = 'rgba(246,133,27,0.6)'
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!metamaskLoading) {
+              const btn = e.currentTarget
+              btn.style.background = 'rgba(246,133,27,0.1)'
+              btn.style.borderColor = 'rgba(246,133,27,0.35)'
+            }
+          }}
+        >
+          <span style={{ fontSize: '18px', lineHeight: 1 }}>🦊</span>
+          {metamaskLoading ? 'Conectando...' : 'Conectar con MetaMask'}
+        </button>
 
         {/* Footer links */}
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
