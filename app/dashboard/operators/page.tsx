@@ -29,6 +29,32 @@ export default function OperatorsPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#0E0E0F', padding: '28px 32px' }}>
 
+      {/* Liquidity metrics bar */}
+      <div style={{
+        background: '#1A1A1C', border: '1px solid #2A2A2D',
+        borderRadius: '12px', padding: '16px 20px',
+        marginBottom: '20px',
+        display: 'flex', alignItems: 'center', gap: '32px',
+      }}>
+        <div>
+          <div style={{ fontSize: '10px', color: '#7A7A82', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '4px' }}>
+            LIQUIDEZ PARA RETIROS
+          </div>
+          <div style={{ fontSize: '20px', fontWeight: 700, color: '#E8E8EA', fontVariantNumeric: 'tabular-nums' }}>
+            1,533.14 $
+          </div>
+        </div>
+        <div style={{ width: '1px', height: '36px', background: '#2A2A2D' }} />
+        <div>
+          <div style={{ fontSize: '10px', color: '#7A7A82', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '4px' }}>
+            RESERVAS DEL PROTOCOLO
+          </div>
+          <div style={{ fontSize: '14px', fontWeight: 500, color: '#E8E8EA' }}>
+            x – 0,00%
+          </div>
+        </div>
+      </div>
+
       {/* Header */}
       <div style={{ marginBottom: '24px' }}>
         <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#E8E8EA', marginBottom: '4px' }}>
