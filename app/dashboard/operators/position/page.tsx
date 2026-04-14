@@ -90,6 +90,7 @@ export default function PositionPage() {
   const [amountUnit, setAmountUnit] = useState<'wsteth' | 'usd'>('wsteth')
   const [withdrawAmount, setWithdrawAmount] = useState('0.00')
   const [page, setPage] = useState(0)
+  const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc')
 
   const MAX_WSTETH = 169.323
   const withdrawUsd = parseFloat(withdrawAmount) > 0
@@ -97,8 +98,14 @@ export default function PositionPage() {
     : '$0'
   const chartData = useMemo(() => generateDepositGrowth(), [])
 
-  const totalPages = Math.ceil(TRANSACTIONS.length / PAGE_SIZE)
-  const pageRows = TRANSACTIONS.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE)
+  const sortedTransactions = [...TRANSACTIONS].sort((a, b) =>
+    sortOrder === 'desc'
+      ? new Date(`${b.date}T${b.time}`).getTime() - new Date(`${a.date}T${a.time}`).getTime()
+      : new Date(`${a.date}T${a.time}`).getTime() - new Date(`${b.date}T${b.time}`).getTime()
+  )
+
+  const totalPages = Math.ceil(sortedTransactions.length / PAGE_SIZE)
+  const pageRows = sortedTransactions.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE)
 
   return (
     <div style={{ minHeight: '100vh', background: '#0E0E0F', padding: '24px 32px' }}>
@@ -199,16 +206,27 @@ export default function PositionPage() {
           <div style={{ background: '#1A1A1C', border: '1px solid #2A2A2D', borderRadius: '12px', overflow: 'hidden' }}>
             <div style={{ padding: '16px 20px', borderBottom: '1px solid #2A2A2D', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '14px', fontWeight: 600, color: '#E8E8EA' }}>Tus transacciones</span>
-              <span style={{ fontSize: '12px', color: '#7A7A82' }}>{TRANSACTIONS.length} transacciones</span>
+              <span style={{ fontSize: '12px', color: '#7A7A82' }}>{sortedTransactions.length} transacciones</span>
             </div>
 
             {/* Header */}
             <div style={{ display: 'grid', gridTemplateColumns: '190px 130px 1fr 150px', padding: '10px 20px', borderBottom: '1px solid #1F1F21', background: '#141415' }}>
-              {['Fecha ↓', 'Tipo', 'Cantidad', 'Transacción'].map((h, i) => (
-                <span key={i} style={{ fontSize: '11px', color: '#7A7A82', textTransform: 'uppercase', letterSpacing: '0.07em', fontWeight: 600 }}>
+              {['Tipo', 'Cantidad', 'Transacción'].map((h, i) => (
+                <span key={i} style={{ fontSize: '11px', color: '#7A7A82', textTransform: 'uppercase', letterSpacing: '0.07em', fontWeight: 600, gridColumn: i === 0 ? 2 : undefined }}>
                   {h}
                 </span>
               ))}
+              <span
+                onClick={() => { setSortOrder(o => o === 'desc' ? 'asc' : 'desc'); setPage(0) }}
+                style={{
+                  fontSize: '11px', color: '#9A9AA2', textTransform: 'uppercase',
+                  letterSpacing: '0.07em', fontWeight: 600, cursor: 'pointer',
+                  gridColumn: 1, gridRow: 1,
+                  userSelect: 'none',
+                }}
+              >
+                FECHA {sortOrder === 'desc' ? '↓' : '↑'}
+              </span>
             </div>
 
             {/* Rows */}
