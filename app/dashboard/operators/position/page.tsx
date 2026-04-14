@@ -18,6 +18,7 @@ interface TxRow {
   time: string
   usdAmount: number
   hash: string
+  url?: string
 }
 
 const TRANSACTIONS: TxRow[] = [
@@ -44,6 +45,9 @@ const TRANSACTIONS: TxRow[] = [
   { date: '2025-11-11', time: '11:04:22', usdAmount: 44991.23,   hash: '0x9a1d8c5e...8c5e' },
   { date: '2025-11-13', time: '14:37:48', usdAmount: 2914.08,    hash: '0x2b5f1a7d...1a7d' },
   { date: '2025-11-29', time: '09:51:36', usdAmount: 50000.00,   hash: '0x8e3c4d9f...4d9f' },
+  { date: '2026-03-09', time: '10:15:25', usdAmount: 7948.52,    hash: '0x3b47a49a...986610', url: 'https://arbiscan.io/tx/0x3b47a49ad8c5bcd3a17d65eeb230b6db97ddf36ae38c3299fb6a2fb718986610' },
+  { date: '2026-03-18', time: '06:55:25', usdAmount: 3863.28,    hash: '0x06e52ca2...e9e0d',  url: 'https://arbiscan.io/tx/0x06e52ca219c0b01f4d4956797f0ac863f429a95815a06b2de63b6104d27e9e0d' },
+  { date: '2026-04-01', time: '05:58:40', usdAmount: 1612.60,    hash: '0x08225e84...ecb28',  url: 'https://arbiscan.io/tx/0x08225e84b870c73b2a098159d54dcaca2182328e5af2281d628ab17a623ecb28' },
 ]
 
 const PAGE_SIZE = 10
@@ -240,10 +244,22 @@ export default function PositionPage() {
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <span style={{ fontSize: '12px', color: '#3B82F6', fontFamily: 'monospace' }}>
-                      {tx.hash}
-                    </span>
-                    <ExternalLink size={11} color="#3B82F6" style={{ flexShrink: 0 }} />
+                    {tx.url ? (
+                      <a
+                        href={tx.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ display: 'flex', alignItems: 'center', gap: '5px', textDecoration: 'none' }}
+                      >
+                        <span style={{ fontSize: '12px', color: '#3B82F6', fontFamily: 'monospace' }}>{tx.hash}</span>
+                        <ExternalLink size={11} color="#3B82F6" style={{ flexShrink: 0 }} />
+                      </a>
+                    ) : (
+                      <>
+                        <span style={{ fontSize: '12px', color: '#3B82F6', fontFamily: 'monospace' }}>{tx.hash}</span>
+                        <ExternalLink size={11} color="#3B82F6" style={{ flexShrink: 0 }} />
+                      </>
+                    )}
                   </div>
                 </div>
               )
