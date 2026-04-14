@@ -25,13 +25,13 @@ export async function getMetrics(): Promise<ProtocolMetrics> {
     })
     
     return {
-      apr_current: parseFloat(metricsMap.apr_current || '6.78'),
+      apr_current: parseFloat(metricsMap.apr_current || '6.83'),
       apr_7d: parseFloat(metricsMap.apr_7d || '7.01'),
       apr_30d: parseFloat(metricsMap.apr_30d || '6.43'),
       total_deposits_eth: parseFloat(metricsMap.total_deposits_eth || '169.323'),
       total_funds_eth: parseFloat(metricsMap.total_funds_eth || '66744.72'),
       rewards_distributed_eth: parseFloat(metricsMap.rewards_distributed_eth || '3458.64'),
-      active_validators: parseInt(metricsMap.active_validators || '2056'),
+      active_validators: parseInt(metricsMap.active_validators || '2323'),
       liquidity_withdrawal: parseFloat(metricsMap.liquidity_withdrawal || '1533.14'),
       protocol_reserves: parseFloat(metricsMap.protocol_reserves || '8843.34'),
       eth_eur_rate: parseFloat(metricsMap.eth_eur_rate || '1789.50'),
@@ -39,13 +39,13 @@ export async function getMetrics(): Promise<ProtocolMetrics> {
   } catch {
     // Return defaults if DB not connected
     return {
-      apr_current: 6.78,
+      apr_current: 6.83,
       apr_7d: 7.01,
       apr_30d: 6.43,
       total_deposits_eth: 169.323,
       total_funds_eth: 66744.72,
       rewards_distributed_eth: 3458.64,
-      active_validators: 2056,
+      active_validators: 2323,
       liquidity_withdrawal: 1533.14,
       protocol_reserves: 8843.34,
       eth_eur_rate: 1789.50,

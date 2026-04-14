@@ -22,11 +22,11 @@ function generateChartData(days: number, baseApr: number) {
 
 // Validators data
 const validatorsByProtocol = [
-  { name: 'Lido CSM', count: 729 },
-  { name: 'Stader Permissionless', count: 660 },
-  { name: 'Stader Permissioned', count: 450 },
-  { name: 'Vanilla', count: 137 },
-  { name: 'Lido SDVT', count: 80 },
+  { name: 'Lido CSM', count: 824 },
+  { name: 'Stader Permissionless', count: 746 },
+  { name: 'Stader Permissioned', count: 509 },
+  { name: 'Vanilla', count: 155 },
+  { name: 'Lido SDVT', count: 90 },
 ]
 
 type TabType = 'stablecoins' | 'ethereum' | 'bitcoin'
@@ -34,13 +34,13 @@ type TabType = 'stablecoins' | 'ethereum' | 'bitcoin'
 export default function MetricsPage() {
   const [activeTab, setActiveTab] = useState<TabType>('ethereum')
   const [metrics, setMetrics] = useState({
-    apr_current: 6.78,
+    apr_current: 6.83,
     apr_7d: 7.01,
     apr_30d: 6.43,
     total_deposits_eth: 169.323,
     total_funds_eth: 66744.72,
     rewards_distributed_eth: 3458.64,
-    active_validators: 2056,
+    active_validators: 2323,
     liquidity_withdrawal: 1533.14,
     protocol_reserves: 8843.34,
     eth_eur_rate: 1789.50,
