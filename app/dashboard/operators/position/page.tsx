@@ -48,6 +48,7 @@ const TRANSACTIONS: TxRow[] = [
   { date: '2026-03-09', time: '10:15:25', usdAmount: 7948.52,    hash: '0x3b47a49a...986610', url: 'https://arbiscan.io/tx/0x3b47a49ad8c5bcd3a17d65eeb230b6db97ddf36ae38c3299fb6a2fb718986610' },
   { date: '2026-03-18', time: '06:55:25', usdAmount: 3863.28,    hash: '0x06e52ca2...e9e0d',  url: 'https://arbiscan.io/tx/0x06e52ca219c0b01f4d4956797f0ac863f429a95815a06b2de63b6104d27e9e0d' },
   { date: '2026-04-01', time: '05:58:40', usdAmount: 1612.60,    hash: '0x08225e84...ecb28',  url: 'https://arbiscan.io/tx/0x08225e84b870c73b2a098159d54dcaca2182328e5af2281d628ab17a623ecb28' },
+  { date: '2026-04-15', time: '10:23:17', usdAmount: 1550.00,    hash: '0x4f2a1c9e...3d7b' },
 ]
 
 const PAGE_SIZE = 10

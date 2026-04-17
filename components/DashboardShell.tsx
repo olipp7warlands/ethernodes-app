@@ -13,7 +13,6 @@ const navItems = [
   { icon: BarChart2, label: 'Métricas', href: '/dashboard/metrics' },
   { icon: Layers, label: 'Validadores', href: '/dashboard/validators' },
   { icon: Users, label: 'Operadores', href: '/dashboard/operators' },
-  { icon: Settings, label: 'Configuración', href: '/dashboard/settings' },
 ]
 
 function shortAddress(addr: string) {
