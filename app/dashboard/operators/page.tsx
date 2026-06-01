@@ -86,7 +86,7 @@ export default function OperatorsPage() {
             Total Depósitos
           </div>
           <div style={{ fontSize: '36px', fontWeight: 700, color: '#39FF6B', marginBottom: '4px', fontVariantNumeric: 'tabular-nums' }}>
-            $302,988.27
+            $332,381.25
           </div>
           <div style={{ fontSize: '13px', color: '#7A7A82', marginBottom: '16px' }}>
             169,323 wstETH · Ethereum
@@ -105,7 +105,7 @@ export default function OperatorsPage() {
               Net APY
             </div>
             <div style={{ fontSize: '48px', fontWeight: 700, color: '#E8E8EA', lineHeight: 1, marginBottom: '4px' }}>
-              6,78%
+              5,12%
             </div>
             <div style={{ fontSize: '12px', color: '#7A7A82' }}>APR efectivo actual</div>
           </div>
@@ -185,7 +185,7 @@ export default function OperatorsPage() {
             <div style={{ fontSize: '13px', fontWeight: 600, color: '#E8E8EA', fontVariantNumeric: 'tabular-nums' }}>
               169,323 wstETH
             </div>
-            <div style={{ fontSize: '11px', color: '#7A7A82' }}>$302.988,27</div>
+            <div style={{ fontSize: '11px', color: '#7A7A82' }}>$332.381,25</div>
           </div>
 
           {/* Curator */}
@@ -212,7 +212,7 @@ export default function OperatorsPage() {
 
           {/* APY */}
           <div style={{ fontSize: '14px', fontWeight: 700, color: '#39FF6B' }}>
-            6,78%
+            5,12%
           </div>
 
           {/* Menu */}

@@ -61,7 +61,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
       }}>
         {/* Logo */}
         <div style={{ padding: '20px 20px 18px', borderBottom: '1px solid #2A2A2D' }}>
-          <Link href="/dashboard/metrics" style={{ textDecoration: 'none' }}>
+          <Link href="/dashboard/validators" style={{ textDecoration: 'none' }}>
             <img src="/logo.png" alt="Ethernodes" style={{ height: '44px', width: 'auto', display: 'block' }} />
           </Link>
         </div>

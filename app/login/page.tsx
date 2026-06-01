@@ -72,7 +72,7 @@ export default function LoginPage() {
       const data = await res.json()
 
       if (res.ok) {
-        router.push('/dashboard/metrics')
+        router.push('/dashboard/validators')
       } else {
         setError(data.error || 'Error de autenticación')
       }
@@ -107,7 +107,7 @@ export default function LoginPage() {
       const data = await res.json()
 
       if (res.ok) {
-        router.push('/dashboard/metrics')
+        router.push('/dashboard/validators')
       } else {
         setError(data.error || 'Credenciales incorrectas')
       }
