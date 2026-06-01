@@ -23,26 +23,24 @@ export default function RootLayout({
       </head>
       <body className="bg-en-bg text-en-text antialiased">
         <div
-          role="alert"
+          role="note"
           style={{
             position: 'sticky',
             top: 0,
             zIndex: 9999,
             width: '100%',
-            background: '#7A2E0E',
-            borderBottom: '1px solid #FB923C',
-            color: '#FFE8D6',
-            fontSize: '13px',
-            fontWeight: 600,
+            background: '#141415',
+            borderBottom: '1px solid #2A2A2D',
+            color: '#9A9AA2',
+            fontSize: '11px',
+            fontWeight: 500,
             textAlign: 'center',
-            padding: '8px 16px',
-            letterSpacing: '0.01em',
-            lineHeight: 1.4,
+            padding: '5px 16px',
+            letterSpacing: '0.02em',
+            lineHeight: 1.3,
           }}
         >
-          ⚠️ DEMO · Entorno formativo — Todos los datos (saldos, APR, validadores,
-          transacciones y fees) son <strong>simulados</strong> y no tienen valor real.
-          Esto no es un servicio financiero ni de inversión.
+          Entorno de demostración · datos simulados, sin valor real
         </div>
         {children}
       </body>
