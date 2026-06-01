@@ -51,17 +51,16 @@ const validatorsByProtocol = [
 
 // Weekly fees history (educational simulation, week 1 starts 2026-04-01)
 const weeklyFees = [
-  { week: 'Semana 1', short: 'S1', period: '01 Abr – 07 Abr 2026', amount: 789.45 },
-  { week: 'Semana 2', short: 'S2', period: '08 Abr – 14 Abr 2026', amount: 643.32 },
-  { week: 'Semana 3', short: 'S3', period: '15 Abr – 21 Abr 2026', amount: 432.78 },
-  { week: 'Semana 4', short: 'S4', period: '22 Abr – 28 Abr 2026', amount: 339.50 },
-  { week: 'Semana 5', short: 'S5', period: '29 Abr – 05 May 2026', amount: 567.88 },
-  { week: 'Semana 6', short: 'S6', period: '06 May – 12 May 2026', amount: 493.31 },
-  { week: 'Semana 7', short: 'S7', period: '13 May – 19 May 2026', amount: 344.14 },
-  { week: 'Semana 8', short: 'S8', period: '20 May – 26 May 2026', amount: 421.89 },
-  { week: 'Semana 9', short: 'S9', period: '27 May – 02 Jun 2026', amount: 323.70 },
+  { short: 'S1', period: '01 Abr – 07 Abr 2026', amount: 789.45, start: '2026-04-01', end: '2026-04-07' },
+  { short: 'S2', period: '08 Abr – 14 Abr 2026', amount: 643.32, start: '2026-04-08', end: '2026-04-14' },
+  { short: 'S3', period: '15 Abr – 21 Abr 2026', amount: 432.78, start: '2026-04-15', end: '2026-04-21' },
+  { short: 'S4', period: '22 Abr – 28 Abr 2026', amount: 339.50, start: '2026-04-22', end: '2026-04-28' },
+  { short: 'S5', period: '29 Abr – 05 May 2026', amount: 567.88, start: '2026-04-29', end: '2026-05-05' },
+  { short: 'S6', period: '06 May – 12 May 2026', amount: 493.31, start: '2026-05-06', end: '2026-05-12' },
+  { short: 'S7', period: '13 May – 19 May 2026', amount: 344.14, start: '2026-05-13', end: '2026-05-19' },
+  { short: 'S8', period: '20 May – 26 May 2026', amount: 421.89, start: '2026-05-20', end: '2026-05-26' },
+  { short: 'S9', period: '27 May – 02 Jun 2026', amount: 323.70, start: '2026-05-27', end: '2026-06-02' },
 ]
-const weeklyFeesTotal = weeklyFees.reduce((sum, w) => sum + w.amount, 0)
 
 type TabType = 'stablecoins' | 'ethereum' | 'bitcoin'
 
@@ -80,6 +79,9 @@ export default function MetricsPage() {
     eth_eur_rate: 1963.00,
   })
 
+  const [desde, setDesde] = useState('')
+  const [hasta, setHasta] = useState('')
+
   const chart7d = useMemo(() => generate7dChart(metrics.apr_7d), [metrics.apr_7d])
   const chart30d = useMemo(() => generate30dChart(metrics.apr_30d), [metrics.apr_30d])
 
@@ -89,6 +91,13 @@ export default function MetricsPage() {
       .then(data => setMetrics(data))
       .catch(() => {})
   }, [])
+
+  const filteredFees = weeklyFees.filter(w => {
+    if (desde && w.end < desde) return false
+    if (hasta && w.start > hasta) return false
+    return true
+  })
+  const filteredTotal = filteredFees.reduce((sum, w) => sum + w.amount, 0)
 
   const fmt = (n: number, decimals = 2) =>
     n.toLocaleString('es-ES', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
@@ -311,7 +320,7 @@ export default function MetricsPage() {
                   formatter={(value: number) => [`$${value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 'Fees']}
                   labelFormatter={(label: string) => {
                     const row = weeklyFees.find(w => w.short === label)
-                    return row ? `${row.week} · ${row.period}` : label
+                    return row ? row.period : label
                   }}
                 />
                 <Bar dataKey="amount" radius={[4, 4, 0, 0]}>
@@ -323,44 +332,84 @@ export default function MetricsPage() {
             </ResponsiveContainer>
           </div>
 
+          {/* Date filter */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
+            <span style={{ fontSize: '12px', color: '#7A7A82' }}>Desde</span>
+            <input
+              type="date"
+              value={desde}
+              onChange={e => setDesde(e.target.value)}
+              style={{
+                background: '#242426', border: '1px solid #2A2A2D', borderRadius: '8px',
+                padding: '6px 10px', color: '#E8E8EA', fontSize: '13px',
+                outline: 'none', colorScheme: 'dark',
+              }}
+            />
+            <span style={{ fontSize: '12px', color: '#7A7A82' }}>Hasta</span>
+            <input
+              type="date"
+              value={hasta}
+              onChange={e => setHasta(e.target.value)}
+              style={{
+                background: '#242426', border: '1px solid #2A2A2D', borderRadius: '8px',
+                padding: '6px 10px', color: '#E8E8EA', fontSize: '13px',
+                outline: 'none', colorScheme: 'dark',
+              }}
+            />
+            {(desde || hasta) && (
+              <button
+                onClick={() => { setDesde(''); setHasta('') }}
+                style={{
+                  background: 'none', border: 'none', cursor: 'pointer',
+                  color: '#7A7A82', fontSize: '13px', textDecoration: 'underline', padding: 0,
+                }}
+              >
+                Limpiar
+              </button>
+            )}
+          </div>
+
           {/* Table */}
           <div style={{ borderTop: '1px solid #2A2A2D' }}>
             <div style={{
-              display: 'grid', gridTemplateColumns: '1fr 2fr 1fr',
+              display: 'grid', gridTemplateColumns: '2fr 1fr',
               padding: '10px 0', borderBottom: '1px solid #1F1F21',
             }}>
-              {['Semana', 'Período', 'Fees generados'].map((h, i) => (
+              {['Período', 'Fees generados'].map((h, i) => (
                 <span key={i} style={{
                   fontSize: '11px', color: '#7A7A82', textTransform: 'uppercase',
                   letterSpacing: '0.07em', fontWeight: 600,
-                  textAlign: i === 2 ? 'right' : 'left',
+                  textAlign: i === 1 ? 'right' : 'left',
                 }}>
                   {h}
                 </span>
               ))}
             </div>
-            {weeklyFees.map((w, i) => (
+            {filteredFees.map((w, i) => (
               <div key={i} style={{
-                display: 'grid', gridTemplateColumns: '1fr 2fr 1fr',
+                display: 'grid', gridTemplateColumns: '2fr 1fr',
                 padding: '11px 0', alignItems: 'center',
                 borderBottom: '1px solid #1F1F21',
               }}>
-                <span style={{ fontSize: '13px', color: '#E8E8EA', fontWeight: 500 }}>{w.week}</span>
                 <span style={{ fontSize: '13px', color: '#9A9AA2' }}>{w.period}</span>
                 <span style={{ fontSize: '13px', color: '#E8E8EA', fontWeight: 600, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
                   ${w.amount.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
             ))}
+            {filteredFees.length === 0 && (
+              <div style={{ padding: '20px 0', textAlign: 'center', fontSize: '13px', color: '#5A5A62' }}>
+                Sin resultados para el rango seleccionado
+              </div>
+            )}
             {/* Total */}
             <div style={{
-              display: 'grid', gridTemplateColumns: '1fr 2fr 1fr',
+              display: 'grid', gridTemplateColumns: '2fr 1fr',
               padding: '14px 0 0', alignItems: 'center',
             }}>
               <span style={{ fontSize: '13px', color: '#7A7A82', textTransform: 'uppercase', letterSpacing: '0.07em', fontWeight: 600 }}>Total</span>
-              <span />
               <span style={{ fontSize: '16px', color: '#39FF6B', fontWeight: 700, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
-                ${weeklyFeesTotal.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ${filteredTotal.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
           </div>

@@ -5,7 +5,7 @@ export default async function Home() {
   const session = await getSession()
   
   if (session) {
-    redirect('/dashboard/metrics')
+    redirect('/dashboard/validators')
   } else {
     redirect('/login')
   }

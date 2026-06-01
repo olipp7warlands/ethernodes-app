@@ -12,7 +12,7 @@ const operators = [
 
 const clusterStats = {
   operators: 4,
-  validators: 170,
+  validators: 2187,
   runawayDays: 10,
   balance: 32.7980,
   liquidationCollateral: 44.1432,
@@ -101,7 +101,7 @@ export default function ValidatorsPage() {
       {/* Validators table */}
       <div>
         <h2 style={{ fontSize: '28px', fontWeight: 700, color: '#E8E8EA', marginBottom: '20px' }}>
-          Validadores ({validators.length * 54})
+          Validadores (2.187)
         </h2>
         <div style={{
           background: '#1A1A1C', border: '1px solid #2A2A2D',

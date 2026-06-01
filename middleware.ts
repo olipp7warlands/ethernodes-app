@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
 
   // Redirect logged-in users away from login
   if (pathname === '/login' && token) {
-    return NextResponse.redirect(new URL('/dashboard/metrics', request.url))
+    return NextResponse.redirect(new URL('/dashboard/validators', request.url))
   }
 
   return NextResponse.next()
