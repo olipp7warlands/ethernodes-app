@@ -40,7 +40,6 @@ export default function RootLayout({
             lineHeight: 1.3,
           }}
         >
-          Entorno de demostración · datos simulados, sin valor real
         </div>
         {children}
       </body>
