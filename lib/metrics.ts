@@ -32,9 +32,9 @@ export async function getMetrics(): Promise<ProtocolMetrics> {
       total_funds_eth: parseFloat(metricsMap.total_funds_eth || '66744.72'),
       rewards_distributed_eth: parseFloat(metricsMap.rewards_distributed_eth || '3458.64'),
       active_validators: parseInt(metricsMap.active_validators || '2187'),
-      liquidity_withdrawal: parseFloat(metricsMap.liquidity_withdrawal || '4355.97'),
+      liquidity_withdrawal: parseFloat(metricsMap.liquidity_withdrawal || '98.34'),
       protocol_reserves: parseFloat(metricsMap.protocol_reserves || '8843.34'),
-      eth_eur_rate: parseFloat(metricsMap.eth_eur_rate || '1963.00'),
+      eth_eur_rate: parseFloat(metricsMap.eth_eur_rate || '1655.00'),
     }
   } catch {
     // Return defaults if DB not connected
@@ -46,9 +46,9 @@ export async function getMetrics(): Promise<ProtocolMetrics> {
       total_funds_eth: 66744.72,
       rewards_distributed_eth: 3458.64,
       active_validators: 2187,
-      liquidity_withdrawal: 4355.97,
+      liquidity_withdrawal: 98.34,
       protocol_reserves: 8843.34,
-      eth_eur_rate: 1963.00,
+      eth_eur_rate: 1655.00,
     }
   }
 }

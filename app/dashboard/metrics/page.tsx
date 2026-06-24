@@ -59,7 +59,10 @@ const weeklyFees = [
   { short: 'S6', period: '06 May – 12 May 2026', amount: 493.31, start: '2026-05-06', end: '2026-05-12' },
   { short: 'S7', period: '13 May – 19 May 2026', amount: 344.14, start: '2026-05-13', end: '2026-05-19' },
   { short: 'S8', period: '20 May – 26 May 2026', amount: 421.89, start: '2026-05-20', end: '2026-05-26' },
-  { short: 'S9', period: '27 May – 02 Jun 2026', amount: 323.70, start: '2026-05-27', end: '2026-06-02' },
+  { short: 'S9',  period: '27 May – 02 Jun 2026', amount: 323.70, start: '2026-05-27', end: '2026-06-02' },
+  { short: 'S10', period: '03 Jun – 09 Jun 2026', amount: 287.43, start: '2026-06-03', end: '2026-06-09' },
+  { short: 'S11', period: '10 Jun – 16 Jun 2026', amount: 312.67, start: '2026-06-10', end: '2026-06-16' },
+  { short: 'S12', period: '17 Jun – 23 Jun 2026', amount: 198.55, start: '2026-06-17', end: '2026-06-23' },
 ]
 
 type TabType = 'stablecoins' | 'ethereum' | 'bitcoin'
@@ -74,9 +77,9 @@ export default function MetricsPage() {
     total_funds_eth: 66744.72,
     rewards_distributed_eth: 3458.64,
     active_validators: 2187,
-    liquidity_withdrawal: 4355.97,
+    liquidity_withdrawal: 98.34,
     protocol_reserves: 8843.34,
-    eth_eur_rate: 1963.00,
+    eth_eur_rate: 1655.00,
   })
 
   const [desde, setDesde] = useState('')

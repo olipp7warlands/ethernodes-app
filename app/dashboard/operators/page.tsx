@@ -41,7 +41,7 @@ export default function OperatorsPage() {
             LIQUIDEZ PARA RETIROS
           </div>
           <div style={{ fontSize: '20px', fontWeight: 700, color: '#E8E8EA', fontVariantNumeric: 'tabular-nums' }}>
-            1,533.14 $
+            98.34 $
           </div>
         </div>
         <div style={{ width: '1px', height: '36px', background: '#2A2A2D' }} />
@@ -86,7 +86,7 @@ export default function OperatorsPage() {
             Total Depósitos
           </div>
           <div style={{ fontSize: '36px', fontWeight: 700, color: '#39FF6B', marginBottom: '4px', fontVariantNumeric: 'tabular-nums' }}>
-            $332,381.25
+            $280,229.57
           </div>
           <div style={{ fontSize: '13px', color: '#7A7A82', marginBottom: '16px' }}>
             169,323 wstETH · Ethereum
@@ -185,7 +185,7 @@ export default function OperatorsPage() {
             <div style={{ fontSize: '13px', fontWeight: 600, color: '#E8E8EA', fontVariantNumeric: 'tabular-nums' }}>
               169,323 wstETH
             </div>
-            <div style={{ fontSize: '11px', color: '#7A7A82' }}>$332.381,25</div>
+            <div style={{ fontSize: '11px', color: '#7A7A82' }}>$280.229,57</div>
           </div>
 
           {/* Curator */}

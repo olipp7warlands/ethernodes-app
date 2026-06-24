@@ -11,7 +11,7 @@ const PositionChart = dynamic(() => import('@/components/AprChart'), { ssr: fals
 type MainTab = 'overview' | 'performance' | 'risk' | 'activity' | 'position'
 type SideTab = 'deposit' | 'withdraw'
 
-const ETH_PRICE = 1963
+const ETH_PRICE = 1655
 
 interface TxRow {
   date: string
@@ -97,7 +97,7 @@ export default function PositionPage() {
     ? '$' + (parseFloat(withdrawAmount) * ETH_PRICE).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
     : '$0'
   const chartData = useMemo(
-    () => generateFlatDeposit(amountUnit === 'wsteth' ? 169.323 : 332381.25),
+    () => generateFlatDeposit(amountUnit === 'wsteth' ? 169.323 : 280229.57),
     [amountUnit]
   )
 
@@ -169,12 +169,12 @@ export default function PositionPage() {
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '16px' }}>
               <div>
                 <div style={{ fontSize: '40px', fontWeight: 700, color: '#E8E8EA', fontVariantNumeric: 'tabular-nums', lineHeight: 1.1 }}>
-                  {amountUnit === 'wsteth' ? '169.323' : '$332,381.25'}
+                  {amountUnit === 'wsteth' ? '169.323' : '$280,229.57'}
                 </div>
                 <div style={{ fontSize: '13px', color: '#7A7A82', marginTop: '4px' }}>
                   {amountUnit === 'wsteth' ? (
                     <>
-                      ≈ $332,381.25
+                      ≈ $280,229.57
                       <span style={{ fontSize: '11px', color: '#7A7A82', fontStyle: 'italic', marginLeft: '6px' }}>(locked price)</span>
                     </>
                   ) : '169.323 wstETH'}
@@ -481,8 +481,8 @@ export default function PositionPage() {
                   { label: 'Red',                    value: '◆ Ethereum' },
                   { label: 'Depósito (wstETH)',       value: '169.323' },
                   { label: 'APY',                     value: '5,12%' },
-                  { label: 'Ganancia mensual est.',   value: '$1,421.18' },
-                  { label: 'Ganancia anual est.',     value: '$17,054.16' },
+                  { label: 'Ganancia mensual est.',   value: '$1,196.98' },
+                  { label: 'Ganancia anual est.',     value: '$14,363.75' },
                 ].map((row, i) => (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 0', borderBottom: i < 4 ? '1px solid #1F1F21' : 'none' }}>
                     <span style={{ fontSize: '12px', color: '#7A7A82' }}>{row.label}</span>
