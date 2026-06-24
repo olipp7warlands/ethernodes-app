@@ -77,7 +77,7 @@ export default function MetricsPage() {
     total_funds_eth: 66744.72,
     rewards_distributed_eth: 3458.64,
     active_validators: 2187,
-    liquidity_withdrawal: 98.34,
+    liquidity_withdrawal: 0.04,
     protocol_reserves: 8843.34,
     eth_eur_rate: 1655.00,
   })

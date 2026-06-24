@@ -41,7 +41,7 @@ export default function OperatorsPage() {
             LIQUIDEZ PARA RETIROS
           </div>
           <div style={{ fontSize: '20px', fontWeight: 700, color: '#E8E8EA', fontVariantNumeric: 'tabular-nums' }}>
-            98.34 $
+            0.04 $
           </div>
         </div>
         <div style={{ width: '1px', height: '36px', background: '#2A2A2D' }} />
